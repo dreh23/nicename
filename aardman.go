@@ -1,0 +1,188 @@
+package nicename
+
+// AardmanAdjectives contains spirited, eccentric, and charming adjectives
+// celebrating Wallace & Gromit and classic British colloquialisms.
+var AardmanAdjectives = []string{
+	"Astute",
+	"Audacious",
+	"Barmy",
+	"Brave",
+	"Breezy",
+	"Brilliant",
+	"Bumbling",
+	"Cheesy",
+	"Chirpy",
+	"Chubby",
+	"Clever",
+	"Crafty",
+	"Cracking",
+	"Daft",
+	"Dapper",
+	"Daring",
+	"Dashing",
+	"Eccentric",
+	"Fearless",
+	"Feathered",
+	"Gallant",
+	"Grand",
+	"Gullible",
+	"Heroic",
+	"Industrious",
+	"Ingenious",
+	"Inventive",
+	"Jolly",
+	"Loyal",
+	"Mechanical",
+	"Mellow",
+	"Mischievous",
+	"Nifty",
+	"Noble",
+	"Plucky",
+	"Posh",
+	"Quirky",
+	"Resilient",
+	"Resourceful",
+	"Shifty",
+	"Smashing",
+	"Snazzy",
+	"Spiffy",
+	"Spirited",
+	"Splendid",
+	"Sprightly",
+	"Stealthy",
+	"Ticklish",
+	"Tireless",
+	"Toasty",
+	"Tricky",
+	"Unflappable",
+	"Valiant",
+	"Vigilant",
+	"Whimsical",
+	"Wobbly",
+	"Woolly",
+	"Zippy",
+}
+
+// AardmanCharacters contains memorable characters from the Wallace & Gromit
+// and Aardman Animations filmography (Chicken Run, Morph, Shaun the Sheep, etc.).
+var AardmanCharacters = []string{
+	// Wallace & Gromit
+	"Wallace",
+	"Gromit",
+	"Feathers McGraw",
+	"Wendolene Ramsbottom",
+	"Shaun the Sheep",
+	"Preston the Cyberdog",
+	"Lady Campanula Tottington",
+	"Lord Victor Quartermaine",
+	"Philip the Dog",
+	"Piella Bakewell",
+	"Fluffles",
+	"The Cooker",
+	"PC Mackintosh",
+	"Hutch the Rabbit",
+	"Reverend Clement Hedges",
+	"Norbot the Smart Gnome",
+	"Major Crum",
+	"Mr Caliche",
+
+	// Chicken Run
+	"Ginger",
+	"Rocky Rhodes",
+	"Fowler",
+	"Babs",
+	"Bunty",
+	"Mac",
+	"Nick and Fetcher",
+	"Mrs Tweedy",
+	"Mr Tweedy",
+	"Molly",
+	"Frizzle",
+
+	// The Amazing Adventures of Morph
+	"Morph",
+	"Chas",
+	"Delilah",
+	"Grandmorph",
+	"Gillespie",
+	"Nailbrush",
+
+	// Shaun the Sheep & Timmy Time
+	"Bitzer",
+	"The Farmer",
+	"Shirley",
+	"Timmy",
+	"The Naughty Pigs",
+	"Slip",
+	"Agent Trumper",
+	"Lu-La",
+
+	// Creature Comforts
+	"Frank the Tortoise",
+	"Rex the Dog",
+	"Pickles the Pug",
+	"Trixie",
+
+	// Flushed Away
+	"Roddy St James",
+	"Rita Malone",
+	"The Toad",
+	"Whitey",
+	"Spike",
+	"Le Frog",
+	"Sid",
+
+	// The Pirates! In an Adventure with Scientists!
+	"The Pirate Captain",
+	"Pirate with a Scarf",
+	"Albino Pirate",
+	"Pirate with Gout",
+	"Surprisingly Curvaceous Pirate",
+	"Polly the Dodo",
+	"Charles Darwin",
+	"Mr Bobo",
+	"Queen Victoria",
+
+	// Early Man
+	"Dug",
+	"Hognob",
+	"Goona",
+	"Lord Nooth",
+	"Treebor",
+
+	// Robin Robin
+	"Robin",
+	"Magpie",
+	"Cat",
+	"Dad Mouse",
+}
+
+// AardmanInventions contains famous contraptions, locations, and iconic cheeses
+// from 62 West Wallaby Street and beyond.
+var AardmanInventions = []string{
+	"Techno Trousers",
+	"Knit-o-matic",
+	"Snoozatron",
+	"Bun-vac 6000",
+	"Anti-Pesto Van",
+	"Rocket Ship",
+	"Porridge Gun",
+	"Autochef",
+	"Tellyscope",
+	"Wensleydale",
+	"Red Leicester",
+	"Stinking Bishop",
+	"Smashing Cheddar",
+	"Cracking Toast",
+	"West Wallaby Street",
+	"Top Bun Bakery",
+	"The Wrong Trousers",
+	"A Grand Day Out",
+	"A Close Shave",
+	"A Matter of Loaf and Death",
+	"The Curse of the Were-Rabbit",
+	"Vengeance Most Fowl",
+}
+
+// AardmanNouns combines all Aardman characters and inventions.
+var AardmanNouns = append(append([]string{}, AardmanCharacters...), AardmanInventions...)

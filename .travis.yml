@@ -1,9 +1,0 @@
-language: go
-sudo: false
-go:
-  - 1.6
-env:
-  global:
-    - GOARCH=amd64
-script:
-  - go test
