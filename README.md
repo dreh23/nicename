@@ -145,7 +145,7 @@ BenchmarkGenerateTaskID-12         2,188,717    546.7 ns/op     83 B/op    5 all
 go test -v -race ./...
 ```
 
-Statement coverage: **97.7%**.
+Statement coverage: **100.0%**.
 
 ---
 

@@ -10,6 +10,8 @@ import (
 	"strings"
 )
 
+var cryptoRandReader = crand.Read
+
 // GeneratePair generates a classic random adjective + name pair
 // from the original dataset (e.g. "Adventurous Mary").
 // Preserves full backwards compatibility.
@@ -61,7 +63,7 @@ func GenerateAardmanSlug() string {
 func FormatTaskID(slug string) string {
 	var suffixBytes [2]byte
 	var suffix string
-	if _, err := crand.Read(suffixBytes[:]); err != nil {
+	if _, err := cryptoRandReader(suffixBytes[:]); err != nil {
 		suffix = fmt.Sprintf("%04x", randv2.Uint32()&0xffff)
 	} else {
 		suffix = hex.EncodeToString(suffixBytes[:])

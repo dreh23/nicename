@@ -1,6 +1,7 @@
 package nicename
 
 import (
+	"errors"
 	"regexp"
 	"strings"
 	"sync"
@@ -113,6 +114,25 @@ func TestFormatTaskID(t *testing.T) {
 	customResult := FormatTaskID("build-task")
 	if !strings.HasPrefix(customResult, "build-task-") || len(customResult) != len("build-task-")+4 {
 		t.Errorf("FormatTaskID(\"build-task\") = %q; want prefix build-task-[hex4]", customResult)
+	}
+}
+
+func TestFormatTaskID_EntropyFallback(t *testing.T) {
+	origReader := cryptoRandReader
+	defer func() { cryptoRandReader = origReader }()
+
+	cryptoRandReader = func(b []byte) (int, error) {
+		return 0, errors.New("simulated entropy failure")
+	}
+
+	res := FormatTaskID("worker-task")
+	if !strings.HasPrefix(res, "worker-task-") || len(res) != len("worker-task-")+4 {
+		t.Errorf("FormatTaskID fallback failed, got %q", res)
+	}
+
+	emptyRes := FormatTaskID("")
+	if len(emptyRes) != 4 || strings.HasPrefix(emptyRes, "-") {
+		t.Errorf("FormatTaskID fallback with empty slug failed, got %q", emptyRes)
 	}
 }
 
