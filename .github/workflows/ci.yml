@@ -6,14 +6,40 @@ on:
   pull_request:
     branches: [ master, main ]
 
+permissions:
+  contents: read
+
 jobs:
   test:
+    name: Test (Go ${{ matrix.go-version }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: ['1.22', '1.23']
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22'
-      - name: Test with Race Detector
+          go-version: ${{ matrix.go-version }}
+
+      - name: Check Formatting
+        run: |
+          diffs=$(gofmt -l -s .)
+          if [ -n "$diffs" ]; then
+            echo "Unformatted files found:"
+            echo "$diffs"
+            exit 1
+          fi
+
+      - name: Go Vet
+        run: go vet ./...
+
+      - name: Run Tests with Race Detector
         run: go test -v -race -covermode=atomic ./...
+
+      - name: Build CLI Binary
+        run: go build -v ./cmd/nicename

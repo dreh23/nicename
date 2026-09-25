@@ -1,5 +1,6 @@
 package nicename
 
+// First contains a classic list of adjectives used for GeneratePair and GeneratePairSlug.
 var First = []string{
 	"Able",
 	"Abnormal",

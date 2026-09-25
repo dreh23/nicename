@@ -1,14 +1,14 @@
+// Package nicename provides lightweight, thread-safe generators for
+// memorable, human-friendly random names, URL slugs, and unique task identifiers.
 package nicename
 
 import (
 	crand "crypto/rand"
 	"encoding/hex"
+	"fmt"
 	randv2 "math/rand/v2"
-	"regexp"
 	"strings"
 )
-
-var nonAlphaNumRegex = regexp.MustCompile(`[^a-zA-Z0-9]+`)
 
 // GeneratePair generates a classic random adjective + name pair
 // from the original dataset (e.g. "Adventurous Mary").
@@ -63,7 +63,7 @@ func GenerateTaskID() string {
 	var suffixBytes [2]byte
 	if _, err := crand.Read(suffixBytes[:]); err != nil {
 		// Fallback to PRNG if crypto/rand is unavailable
-		return slug + "-0000"
+		return fmt.Sprintf("%s-%04x", slug, randv2.Uint32()&0xffff)
 	}
 	return slug + "-" + hex.EncodeToString(suffixBytes[:])
 }
@@ -85,8 +85,25 @@ func GenerateCustom(adjectives []string, nouns []string, separator string, toSlu
 // Slugify converts any string into a clean lowercase, hyphen-separated slug,
 // stripping special punctuation while preserving alphanumeric words.
 func Slugify(s string) string {
-	s = strings.TrimSpace(strings.ToLower(s))
-	// Replace non-alphanumeric runes with single hyphen
-	slug := nonAlphaNumRegex.ReplaceAllString(s, "-")
-	return strings.Trim(slug, "-")
+	var b strings.Builder
+	b.Grow(len(s))
+	inHyphen := false
+
+	for i := 0; i < len(s); i++ {
+		c := s[i]
+		switch {
+		case (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'):
+			b.WriteByte(c)
+			inHyphen = false
+		case c >= 'A' && c <= 'Z':
+			b.WriteByte(c + ('a' - 'A'))
+			inHyphen = false
+		default:
+			if !inHyphen && b.Len() > 0 {
+				b.WriteByte('-')
+				inHyphen = true
+			}
+		}
+	}
+	return strings.TrimSuffix(b.String(), "-")
 }

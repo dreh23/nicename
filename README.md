@@ -1,10 +1,11 @@
 # Nicename 🐶🧀
 
+[![CI](https://github.com/dreh23/nicename/actions/workflows/ci.yml/badge.svg)](https://github.com/dreh23/nicename/actions/workflows/ci.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/dreh23/nicename.svg)](https://pkg.go.dev/github.com/dreh23/nicename)
 [![Go Report Card](https://goreportcard.com/badge/github.com/dreh23/nicename)](https://goreportcard.com/report/github.com/dreh23/nicename)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-A lightweight, concurrency-safe Go library for generating delightful, human-friendly random names, URL slugs, and unique task identifiers.
+A lightweight, concurrency-safe Go library and CLI for generating delightful, human-friendly random names, URL slugs, and unique task identifiers.
 
 Now refreshed with full support for **Wallace & Gromit** and the **Aardman Animations** filmography (*Chicken Run*, *Shaun the Sheep*, *Morph*, *Creature Comforts*, *Flushed Away*, *The Pirates!*, and more).
 
@@ -13,27 +14,66 @@ Now refreshed with full support for **Wallace & Gromit** and the **Aardman Anima
 ## ✨ Features
 
 - **Zero External Dependencies**: Pure Go standard library (using modern `math/rand/v2` and `crypto/rand`).
-- **Thread-Safe**: Fully concurrency-safe for high-throughput goroutines and servers.
+- **High Performance & Thread-Safe**: Sub-microsecond execution, zero regex overhead, and fully concurrency-safe for high-throughput goroutines and servers.
 - **Aardman Universe Support**: Over 100+ iconic characters, inventions, cheeses, and British adjectives:
   - *Characters*: Gromit, Wallace, Feathers McGraw, Wendolene Ramsbottom, Shaun the Sheep, Preston, Rocky Rhodes, Ginger, Morph, Chas, Bitzer, The Pirate Captain...
   - *Inventions & Cheeses*: Techno Trousers, Knit-o-matic, Snoozatron, Bun-vac 6000, Wensleydale, Stinking Bishop, Cracking Toast...
   - *Adjectives*: Cracking, Smashing, Plucky, Cheesy, Grand, Gallant, Clever, Feathered, Eccentric...
 - **Kebab-Case Slugs & Task IDs**: Ready-made for Docker container names, Git worktree branches, and background jobs.
+- **CLI Utility Included**: Generate names directly from the command line or shell scripts.
 - **100% Backward Compatible**: Retains the classic `First` and `Second` name lists and `GeneratePair()`.
 
 ---
 
 ## 📦 Installation
 
+### As a Go Library
 ```bash
 go get github.com/dreh23/nicename
 ```
 
 Requires Go 1.22 or newer.
 
+### As a CLI Tool
+```bash
+go install github.com/dreh23/nicename/cmd/nicename@latest
+```
+
 ---
 
-## 🚀 Quick Start
+## 💻 CLI Usage
+
+```bash
+# Default: Spirited Aardman pair
+$ nicename
+Cracking Gromit
+
+# URL- and Git-branch-friendly kebab-case slug
+$ nicename -slug
+cracking-gromit
+
+# Unique collision-resistant task ID (slug + 4-hex random suffix)
+$ nicename -task-id
+cracking-gromit-8f2a
+
+# Specific Aardman character pair
+$ nicename -character
+Clever Feathers McGraw
+
+# Classic original dataset
+$ nicename -classic
+Adventurous Mary
+
+# Generate multiple names
+$ nicename -count 3 -slug
+plucky-feathers-mcgraw
+cheesy-techno-trousers
+grand-wendolene-ramsbottom
+```
+
+---
+
+## 🚀 Quick Start (Go Code)
 
 ```go
 package main
@@ -88,12 +128,12 @@ func main() {
 
 ## ⚡ Performance
 
-Benchmarks executed on Intel Core i5-12400 (Linux amd64):
+Benchmarks executed on Intel Core i5-12400 (Linux amd64, pure Go):
 
 ```text
-BenchmarkGeneratePair-12          6,695,198   173.2 ns/op
-BenchmarkGenerateAardmanSlug-12      73,599  16,579 ns/op
-BenchmarkGenerateTaskID-12           64,429  18,226 ns/op
+BenchmarkGeneratePair-12          22,729,735     51.2 ns/op     18 B/op    1 allocs/op
+BenchmarkGenerateAardmanSlug-12   10,013,353    117.2 ns/op     47 B/op    2 allocs/op
+BenchmarkGenerateTaskID-12         2,188,717    546.7 ns/op     83 B/op    5 allocs/op
 ```
 
 ---
@@ -104,7 +144,7 @@ BenchmarkGenerateTaskID-12           64,429  18,226 ns/op
 go test -v -race ./...
 ```
 
-Statement coverage: **97.0%**.
+Statement coverage: **97.7%**.
 
 ---
 

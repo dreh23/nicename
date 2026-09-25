@@ -1,5 +1,6 @@
 package nicename
 
+// Second contains a classic list of names used for GeneratePair and GeneratePairSlug.
 var Second = []string{
 	"Mary",
 	"Patricia",
