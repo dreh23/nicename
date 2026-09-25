@@ -56,16 +56,26 @@ func GenerateAardmanSlug() string {
 	return Slugify(GenerateAardman())
 }
 
+// FormatTaskID appends a 4-hex collision-resistant suffix to any given slug.
+// If slug is empty, only the random hex suffix is returned without leading hyphens.
+func FormatTaskID(slug string) string {
+	var suffixBytes [2]byte
+	var suffix string
+	if _, err := crand.Read(suffixBytes[:]); err != nil {
+		suffix = fmt.Sprintf("%04x", randv2.Uint32()&0xffff)
+	} else {
+		suffix = hex.EncodeToString(suffixBytes[:])
+	}
+	if slug == "" {
+		return suffix
+	}
+	return slug + "-" + suffix
+}
+
 // GenerateTaskID returns a unique, collision-resistant identifier ideal for
 // worker tasks, git branches, and container names (e.g. "cracking-gromit-8f2a").
 func GenerateTaskID() string {
-	slug := GenerateAardmanSlug()
-	var suffixBytes [2]byte
-	if _, err := crand.Read(suffixBytes[:]); err != nil {
-		// Fallback to PRNG if crypto/rand is unavailable
-		return fmt.Sprintf("%s-%04x", slug, randv2.Uint32()&0xffff)
-	}
-	return slug + "-" + hex.EncodeToString(suffixBytes[:])
+	return FormatTaskID(GenerateAardmanSlug())
 }
 
 // GenerateCustom picks an adjective and a noun from custom slices, joining them with separator.

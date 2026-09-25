@@ -39,6 +39,14 @@ func ExampleGenerateTaskID() {
 	// true
 }
 
+func ExampleFormatTaskID() {
+	taskID := nicename.FormatTaskID("custom-worker-task")
+	// Output will be something like "custom-worker-task-8f2a"
+	fmt.Println(strings.HasPrefix(taskID, "custom-worker-task-"))
+	// Output:
+	// true
+}
+
 func ExampleGenerateCustom() {
 	adjectives := []string{"Grand", "Smashing"}
 	nouns := []string{"Contraption", "Rocket"}

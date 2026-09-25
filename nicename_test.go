@@ -102,6 +102,20 @@ func TestGenerateTaskID(t *testing.T) {
 	}
 }
 
+func TestFormatTaskID(t *testing.T) {
+	hex4Regex := regexp.MustCompile(`^[0-9a-f]{4}$`)
+	// Empty slug should return only 4 hex characters without leading hyphen
+	emptyResult := FormatTaskID("")
+	if !hex4Regex.MatchString(emptyResult) {
+		t.Errorf("FormatTaskID(\"\") = %q; want 4 hex chars", emptyResult)
+	}
+
+	customResult := FormatTaskID("build-task")
+	if !strings.HasPrefix(customResult, "build-task-") || len(customResult) != len("build-task-")+4 {
+		t.Errorf("FormatTaskID(\"build-task\") = %q; want prefix build-task-[hex4]", customResult)
+	}
+}
+
 func TestGenerateCustom(t *testing.T) {
 	adjs := []string{"Super", "Mega"}
 	nouns := []string{"Widget", "Contraption"}
@@ -137,6 +151,13 @@ func TestSlugify(t *testing.T) {
 		{"Anti-Pesto Van!", "anti-pesto-van"},
 		{"---hello---world---", "hello-world"},
 		{"Wallace & Gromit", "wallace-gromit"},
+		{"", ""},
+		{"   ", ""},
+		{"---", ""},
+		{"!@#$%^&*()", ""},
+		{" - - hello - - ", "hello"},
+		{"12345", "12345"},
+		{"foo_bar_baz", "foo-bar-baz"},
 	}
 
 	for _, tt := range tests {
@@ -180,5 +201,11 @@ func BenchmarkGenerateAardmanSlug(b *testing.B) {
 func BenchmarkGenerateTaskID(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		_ = GenerateTaskID()
+	}
+}
+
+func BenchmarkFormatTaskID(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		_ = FormatTaskID("cracking-gromit")
 	}
 }

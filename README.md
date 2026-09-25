@@ -121,6 +121,7 @@ func main() {
 | `GenerateAardmanCharacter()`| `string` | `"Clever Feathers McGraw"`| Adjective paired strictly with an Aardman character. |
 | `GenerateAardmanSlug()` | `string` | `"cracking-gromit"` | URL- and branch-safe kebab-cased Aardman slug. |
 | `GenerateTaskID()` | `string` | `"cracking-gromit-8f2a"` | Aardman slug with a 4-hex crypto-random suffix. |
+| `FormatTaskID(slug string)` | `string` | `"custom-task-8f2a"` | Appends a 4-hex crypto-random suffix to any slug. |
 | `Slugify(s string)` | `string` | `"feathers-mcgraw"` | Cleans and normalizes any string into a lowercase slug. |
 | `GenerateCustom(...)` | `string` | `"Custom Pair"` | Generates pairs from arbitrary custom word slices. |
 
